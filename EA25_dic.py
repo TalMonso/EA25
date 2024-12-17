@@ -90,7 +90,7 @@ def plot_player(player, img_url):
         
         # Creating and presenting the image box
         imagebox = OffsetImage(img, zoom=0.1)
-        ab = AnnotationBbox(imagebox, (0.5, 0.7), frameon=False, xycoords='axes fraction')
+        ab = AnnotationBbox(imagebox, (0.7, 0.5), frameon=False, xycoords='axes fraction')
         
         # Getting the plot
         ax = plt.gca()
