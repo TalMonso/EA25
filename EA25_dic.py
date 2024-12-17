@@ -1,7 +1,11 @@
 import json
-from difflib import get_close_matches
 import pandas as pd
 import matplotlib.pyplot as plt
+import requests
+from io import BytesIO
+from difflib import get_close_matches
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from PIL import Image
 
 try:
     # convert the content of the file to python object
@@ -11,6 +15,7 @@ except FileNotFoundError:
     exit()
 # create dictionary while saved the players by name
 data_dict = {player['Name'].lower(): player for player in data}
+
 
 def translate(choice):
     word = choice.lower()
@@ -34,7 +39,30 @@ def translate(choice):
 
     return "The player does not exist."
 
-def plot_player(player):
+def get_player_image_url(player_name):
+    api_url = f"https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p={player_name.replace(' ', '%20')}"
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json()
+        if 'player' in data and data['player']:
+            player_data = data['player'][0]
+            if 'strCutout' in player_data:
+                return player_data['strCutout']
+            else:
+                print(f"Image not found for {player_name}")
+        else:
+            print(f"No image foung for {player_name}")
+            return None
+    else:
+        print(f"Error fetching image for {player_name}")
+        return None
+    
+    return None
+    
+            
+        
+
+def plot_player(player, img_url):
     state = {
         'Overall Rating' : player['OVR'],
         'Speed' : player['PAC'],
@@ -54,6 +82,22 @@ def plot_player(player):
     plt.title(f"Player Statistics: {player['Name']} - {player['Team']}")
     plt.xticks(rotation=0)
     plt.tight_layout()
+    
+    if img_url:
+        # Downloading and opening the image
+        response = requests.get(img_url)
+        img = Image.open(BytesIO(response.content))
+        
+        # Creating and presenting the image box
+        imagebox = OffsetImage(img, zoom=0.1)
+        ab = AnnotationBbox(imagebox, (0.5, 0.7), frameon=False, xycoords='axes fraction')
+        
+        # Getting the plot
+        ax = plt.gca()
+        ax.add_artist(ab)
+    else:
+        print("No image available for this player.")
+    
     plt.show()    
     
     
@@ -68,7 +112,8 @@ while True:
         if isinstance(result, dict):
             print(f"Player found: {result['Name']}")
             print(f"- Team: {result['Team']} - Age: {result['Age']} \n")
-            plot_player(result)
+            img_url = get_player_image_url(result['Name'])
+            plot_player(result, img_url)
         else:
             print("The player does not exsit.")
     else:
