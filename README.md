@@ -1,4 +1,4 @@
-# ⚽ EA25
+# ⚽ EA25 - FIFA 2025 Player Stats & Image Viewer
 
 
 Overview 🌍
