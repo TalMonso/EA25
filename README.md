@@ -1,14 +1,18 @@
 # ⚽ EA25
 
-EA25 is a Python application designed to fetch and display FIFA 2025 soccer player ratings based on name searches. It provides:
 
-- 🔍 A searchable database of player ratings.
-- 📊 Detailed player statistics and information.
+Overview 🌍
+Welcome to the FIFA 2025 Player Stats & Image Viewer! This Python application allows you to search for soccer players and view their FIFA 2025 statistics, including ratings for key abilities like speed, shooting, passing, and more! Additionally, it displays an image of the player on a graph to make it visually engaging and informative. 🎮📈
 
-## Technologies Used
-- 🐍 Python
+Features ✨
+Search for Players: Enter the name of a player, and the app will fetch their details from a JSON database. 🔍
+Detailed Player Statistics: View stats for FIFA 2025, including Overall Rating, Speed, Shooting, Passing, Dribbling, Defending, and Physical. 📊
+Player Image: See a visual representation of the player by displaying their image alongside the stats chart. 🖼️
+Close Match Suggestions: If the player's name isn't found exactly, the app will suggest close matches to help you out. 💡
 
-## How to Run
-1. Clone the repository.
-2. Ensure you have Python installed.
-3. Run the `main.py` script to start the application.
+How to Use 🧑‍💻
+Run the Application: Start the program by running the Python script.
+Search for Players: Enter the player's name when prompted. You can type the full name or part of it, and the app will suggest close matches.
+View Stats: After finding the player, the app will display their stats on a bar graph and show their image alongside it.
+Exit: Type -1 to exit the application when you're done.
+
